@@ -1,0 +1,8 @@
+{
+  "name": "zmmim03-05",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
