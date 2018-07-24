@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserModel } from '../../Models/user.model';
+import { Storage } from '@ionic/storage';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -10,28 +11,35 @@ import { UserModel } from '../../Models/user.model';
 export class LoginPage {
   public result: any;
   public errors: any;
-  public errmsg: string;  
-  public lvalue: any;
+  public errmsg: string;
   public _user: UserModel;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public _authservice: AuthServiceProvider,        
+    public storage: Storage,
+    public _authservice: AuthServiceProvider,
   ) {
-    this._user =
+   this._user =
       {
-        username: 'kamonwan',
-        password: 'boonpiturak'
-      };      
+        username: '',
+        password: ''
+      };
+    this.storage.get('username').then(user => {
+      if (user === null) { this._user.username = ''; }
+      else { this._user.username = user; }
+    });
+    this.storage.get('id_token').then(token => {
+      if (token === null) { this.result = 'Not Found'; }
+      else { this.result = token; }
+    });
   }
   onClickLogin() { this.getTokens(this._user); }
-  openPage(page: string) {
+  // openPage(page: string) {
     // this.navCtrl.push(page);
-    this.result = ''; 
-    this.errmsg = '';
-    this.lvalue = '';
-  }  
-  getTokens(_u:UserModel) {
+    // this.result = '';
+    // this.errmsg = '';
+  // }
+  getTokens(_u: UserModel) {
     this.result = '';
     this.errmsg = '';
     this._authservice.getToken(_u)
@@ -39,5 +47,10 @@ export class LoginPage {
         (d) => { this.result = d; },
         (e) => { this.errors = e; this.errmsg = Object(e).name; }
       );
-  }  
+  }
+
+  // getValue() {
+    // this.storage.remove('username');
+    // this.storage.remove('id_token');
+  // }
 }
