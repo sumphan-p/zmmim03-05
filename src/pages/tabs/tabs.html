@@ -1,7 +1,6 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>tabs</ion-title>
-  </ion-navbar>
-</ion-header>
-<ion-content padding>
-</ion-content>
+<ion-tabs color='primary'>
+  <ion-tab [root]="TransferPage" tabTitle="Transfer" tabIcon="ios-arrow-dropright-outline"></ion-tab>
+  <ion-tab [root]="CancelPage"   tabTitle="Cancel"   tabIcon="ios-close-circle-outline"></ion-tab>
+  <ion-tab [root]="ReportPage"   tabTitle="Report"   tabIcon="ios-copy-outline"></ion-tab>
+  <ion-tab [root]="AboutPage"    tabTitle="About"    tabIcon="ios-information-circle-outline"></ion-tab>  
+</ion-tabs>

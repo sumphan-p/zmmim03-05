@@ -6,6 +6,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'tabs.html',
 })
 export class TabsPage {
+  TransferPage = 'TransferPage';
+  CancelPage   = 'CancelPage';
+  ReportPage   = 'ReportPage';
+  AboutPage    = 'AboutPage';  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams
