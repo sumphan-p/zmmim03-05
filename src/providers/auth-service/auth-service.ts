@@ -13,7 +13,7 @@ export class AuthServiceProvider {
       .set('username', _user.username)
       .set('password', _user.password);
     return new Promise((res, rej) => {
-      this.http.get(this.url+'/token', { params: _params }).subscribe(
+      this.http.get(this.url+'/token/get', { params: _params }).subscribe(
         d => { res(d); },
         e => { rej(e); }
       );

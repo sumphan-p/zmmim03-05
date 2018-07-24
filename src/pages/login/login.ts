@@ -24,6 +24,13 @@ export class LoginPage {
         password: 'boonpiturak'
       };      
   }
+  onClickLogin() { this.getTokens(this._user); }
+  openPage(page: string) {
+    // this.navCtrl.push(page);
+    this.result = ''; 
+    this.errmsg = '';
+    this.lvalue = '';
+  }  
   getTokens(_u:UserModel) {
     this.result = '';
     this.errmsg = '';
