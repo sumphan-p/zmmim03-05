@@ -1,25 +1,30 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the TransferPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 @IonicPage()
 @Component({
   selector: 'page-transfer',
   templateUrl: 'transfer.html',
 })
 export class TransferPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  qrData = null;
+  createdCode = null;
+  scannedCode = null; 
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private barcodeScanner: BarcodeScanner
+  ) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TransferPage');
+  createCode() {
+    this.createdCode = this.qrData;
   }
-
+ 
+  scanCode() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      this.scannedCode = barcodeData.text;
+    }, (err) => {
+        console.log('Error: ', err);
+    });
+  }  
 }
