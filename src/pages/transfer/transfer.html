@@ -15,19 +15,18 @@
   <br>
   <button ion-button full icon-left (click)="scanCode()" color="secondary" style="height: 40px;">
     <ion-icon name="qr-scanner"></ion-icon>Scan Code</button>
-    <br>
-<!-- Message type : {{ ex_return. MESSAGE_TYPE }} -->
-<br>
-result : {{ result }}
-<br>
-errmsg: {{ errmsg }}
-<br>
+  <br>
+  <ion-card *ngIf="errmsg">
+    <ion-card-content>
+      <br>errmsg: {{ errmsg }}
+    </ion-card-content>
+  </ion-card>
   <ion-card *ngIf="scannedCode">
     <ion-card-content>
-      <br> Material : {{ scannedCode }}
-      <!-- <br> Description : {{ scannedCode }} -->
-      <!-- <br> Dimension : {{ scannedCode }} -->
-      <!-- <br> Sales Order : {{ scannedCode }} -->
+      <br> Material : {{ _vpallet.MATERIAL }}
+      <br> Description : {{ _vpallet.MAKTX }}
+      <br> Dimension : {{ _vpallet.GROES }}
+      <br> Sales Order : {{ _vpallet.SALES_ORD }}
     </ion-card-content>
   </ion-card>
   <ion-grid *ngIf="scannedCode">

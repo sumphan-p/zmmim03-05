@@ -3,8 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Storage } from '@ionic/storage';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-// import { ExReturnModel } from './../../Models/ex_return.model';
-// import { ExPalletModel } from '../../Models/ex_pallet.model';
+import { ExReturnModel } from '../../Models/ex_return.model';
+import { ExPalletModel } from '../../Models/ex_pallet.model';
 
 @IonicPage()
 @Component({
@@ -15,12 +15,14 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 export class TransferPage {
   scannedCode = null;
   token: any;
-
   public result: any;
   public errors: any;
   public errmsg: string;
-  // public ex_return: ExReturnModel;
-  // public ex_pallet: ExPalletModel;
+  public _return : ExReturnModel;  
+  public _pallet : ExPalletModel; 
+  public _vreturn : any;  
+  public _vpallet : any;   
+   // public _return: ExReturnModel[] = [];    
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -50,9 +52,11 @@ export class TransferPage {
     this._authservice.getPallet(this.token, this.scannedCode)
       .then(
         (d) => {
-          this.result = JSON.stringify(d[0]);
-          // this.ex_return = d[0];
-          // this.ex_pallet = d[1];
+          this.result = JSON.stringify(d);
+          this._return = d[0];
+          this._vreturn = this._return[0];          
+          this._pallet = d[1];
+          this._vpallet = this._pallet[0];
         },
         (e) => { this.errors = e; this.errmsg = Object(e).name; }
       );
