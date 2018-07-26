@@ -29,4 +29,17 @@ export class AuthServiceProvider {
       );
     });
   }
+  getPallet(_token:string,_pallet:string) {
+    let _headers = {
+      'Authorization' : 'Bearer '+ _token
+    };
+    let _params = new HttpParams()
+      .set('palletno',_pallet);
+    return new Promise((res, rej) => {
+      this.http.get(this.url+'/Zmmim03/Pallet_Chk', { params:_params,headers:_headers}).subscribe(
+        d => { res(d); },
+        e => { rej(e); }
+      );
+    });    
+  }  
 }

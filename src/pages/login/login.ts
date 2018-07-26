@@ -19,7 +19,7 @@ export class LoginPage {
     public storage: Storage,
     public _authservice: AuthServiceProvider,
   ) {
-   this._user =
+    this._user =
       {
         username: '',
         password: ''
@@ -29,28 +29,34 @@ export class LoginPage {
       else { this._user.username = user; }
     });
     this.storage.get('id_token').then(token => {
-      if (token === null) { this.result = 'Not Found'; }
+      if (token === null) { this.result = ''; }
       else { this.result = token; }
     });
   }
   onClickLogin() { this.getTokens(this._user); }
-  // openPage(page: string) {
+  openPage(page: string) {
+    this.navCtrl.setRoot(page);
     // this.navCtrl.push(page);
-    // this.result = '';
-    // this.errmsg = '';
-  // }
+  }
   getTokens(_u: UserModel) {
     this.result = '';
     this.errmsg = '';
     this._authservice.getToken(_u)
       .then(
-        (d) => { this.result = d; },
+        (d) => { this.result = d; this.openPage('TabsPage'); },
         (e) => { this.errors = e; this.errmsg = Object(e).name; }
       );
   }
 
-  // getValue() {
-    // this.storage.remove('username');
-    // this.storage.remove('id_token');
-  // }
+  resettoken() {
+    this.storage.remove('username');
+    this.storage.remove('id_token');
+    this.result = '';
+    this.errmsg = '';
+    this._user =
+      {
+        username: '',
+        password: ''
+      };
+  }
 }

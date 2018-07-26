@@ -9,8 +9,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-// import { NgxQRCodeModule } from 'ngx-qrcode2';
+// import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,6 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    // NgxQRCodeModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,7 +30,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: 'url_server', useValue: 'http://192.168.137.1/webapi_jwt/api' },  
-    BarcodeScanner,
+    // BarcodeScanner,
     AuthServiceProvider
   ]
 })

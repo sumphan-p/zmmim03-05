@@ -1,13 +1,19 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>login</ion-title>
+    <ion-title>Pallet Transfer System</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <ion-list no-lines>
+  <ion-list no-lines>
+    <!-- <ion-card> -->
+      <!-- <ion-card-content> -->
         <ion-item>
-          <ion-img class="center-cropped" width="100%" height="70" src="assets/imgs/tr1.png" style="background: white;"></ion-img>
+          <ion-img class="center-cropped" width="100%" height="100" src="assets/imgs/tr1.png" style="background: white;"></ion-img>
         </ion-item>
+      <!-- </ion-card-content> -->
+    <!-- </ion-card> -->
+    <!-- <ion-card> -->
+      <!-- <ion-card-content> -->
         <!-- Username -->
         <ion-item>
           <ion-icon name="contact" item-start></ion-icon>
@@ -18,26 +24,30 @@
           <ion-icon name="lock" item-start></ion-icon>
           <ion-input type="password" placeholder="Password" [(ngModel)]="_user.password"></ion-input>
         </ion-item>
-        <!-- Login -->
-        <ion-item>
-          <button (click)="onClickLogin()" ion-button outline block large round style="height: 40px;">LOGIN</button>
-        </ion-item>
-      </ion-list>
-      <!-- <ion-grid>
-        <ion-row justify-content-around>
-          <ion-col align-self-center>
-            <ion-row padding-top>
-              <ion-col>
-                <button ion-button clear block (click)="getValue()">Reset</button>
-              </ion-col>
-              <ion-col>
-                <button ion-button clear block (click)="openPage('ChangePage')">Clear</button>
-              </ion-col>
-            </ion-row>
+      <!-- </ion-card-content> -->
+    <!-- </ion-card> -->
+    <!-- Login -->
+    <ion-item>
+      <button (click)="onClickLogin()" ion-button outline block large round style="height: 40px;">LOGIN</button>
+    </ion-item>
+  </ion-list>
+  <ion-grid *ngIf="result">
+    <ion-row justify-content-around>
+      <ion-col align-self-center>
+        <ion-row padding-top>
+          <ion-col>
+            <button ion-button clear block (click)="resettoken()">Reset</button>
+          </ion-col>
+          <ion-col>
+            <button ion-button clear block (click)="openPage('TabsPage')">OpenPage</button>
           </ion-col>
         </ion-row>
-      </ion-grid> -->
-      <!-- <br> value : {{lvalue}}; -->
-      <br> error : {{errmsg}}
-      <br> token : {{result}}   
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-card *ngIf="errmsg">
+    <ion-card-content>
+      error : {{ errmsg }}
+    </ion-card-content>
+  </ion-card>
 </ion-content>
