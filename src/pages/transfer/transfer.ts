@@ -15,14 +15,18 @@ import { ExPalletModel } from '../../Models/ex_pallet.model';
 export class TransferPage {
   scannedCode = null;
   token: any;
+
   public result: any;
   public errors: any;
   public errmsg: string;
-  public _return : ExReturnModel;  
-  public _pallet : ExPalletModel; 
-  public _vreturn : any;  
-  public _vpallet : any;   
-   // public _return: ExReturnModel[] = [];    
+
+  public _vreturn: any;
+  public _vpallet: any;
+  public _return: ExReturnModel;
+  public _pallet: ExPalletModel;
+
+  public _status : boolean;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,18 +51,32 @@ export class TransferPage {
   }
 
   getPallet() {
-    this.result = '';
-    this.errmsg = '';
+    this.result = null;
+    this.errors = null;
+    this.errmsg = null;
+    this._return = null;
+    this._pallet = null;
+    this._vreturn = null;
+    this._vpallet = null;
+    this._status = false;
     this._authservice.getPallet(this.token, this.scannedCode)
       .then(
         (d) => {
           this.result = JSON.stringify(d);
           this._return = d[0];
-          this._vreturn = this._return[0];          
+          this._vreturn = this._return[0];
           this._pallet = d[1];
           this._vpallet = this._pallet[0];
+          if (this._vreturn.MESSAGE_TYPE === 'E') {
+            this._status = true;
+            this.errmsg = this._vreturn.MESSAGE;
+          }
         },
-        (e) => { this.errors = e; this.errmsg = Object(e).name; }
+        (e) => {
+          this.errors  = e;
+          this._status = true;
+          this.errmsg  = Object(e).name;
+        }
       );
   }
   ClearData() {

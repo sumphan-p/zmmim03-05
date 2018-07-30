@@ -10,18 +10,22 @@
   </ion-item>
   <ion-item>
     <ion-icon name="ios-cube-outline" item-start></ion-icon>
-    <ion-input type="text" placeholder="Storage Location" [(ngModel)]="token"></ion-input>
+    <ion-input type="text" placeholder="Storage Location" [(ngModel)]="_vpallet.TO_SLOC"></ion-input>
   </ion-item>
   <br>
   <button ion-button full icon-left (click)="scanCode()" color="secondary" style="height: 40px;">
     <ion-icon name="qr-scanner"></ion-icon>Scan Code</button>
   <br>
-  <ion-card *ngIf="errmsg">
+  <div *ngIf="_status==true">
+  <ion-card >
     <ion-card-content>
-      <br>errmsg: {{ errmsg }}
-    </ion-card-content>
+      <br>error : 'E'
+      <br>errmsg : {{ errmsg }}
+    </ion-card-content>      
   </ion-card>
-  <ion-card *ngIf="scannedCode">
+</div>  
+<div *ngIf="_status==false">
+  <ion-card>
     <ion-card-content>
       <br> Material : {{ _vpallet.MATERIAL }}
       <br> Description : {{ _vpallet.MAKTX }}
@@ -29,18 +33,19 @@
       <br> Sales Order : {{ _vpallet.SALES_ORD }}
     </ion-card-content>
   </ion-card>
-  <ion-grid *ngIf="scannedCode">
-    <ion-row justify-content-around>
-      <ion-col align-self-center>
-        <ion-row padding-top>
-          <ion-col>
-            <button (click)="getPallet()" ion-button outline block large round style="height: 40px;">Post</button>
-          </ion-col>
-          <ion-col>
-            <button (click)="ClearData()" ion-button outline block large round style="height: 40px;">Clear</button>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-grid >
+      <ion-row justify-content-around>
+        <ion-col align-self-center>
+          <ion-row padding-top>
+            <ion-col>
+              <button [disabled]="_status==true" (click)="getPallet()" ion-button outline block large round style="height: 40px;">Post</button>
+            </ion-col>
+            <ion-col>
+              <button [disabled]="_status==true" (click)="ClearData()" ion-button outline block large round style="height: 40px;">Clear</button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>  
+</div>  
 </ion-content>
