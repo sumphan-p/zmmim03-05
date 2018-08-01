@@ -31,7 +31,7 @@
       <button (click)="onClickLogin()" ion-button outline block large round style="height: 40px;">LOGIN</button>
     </ion-item>
   </ion-list>
-  <ion-grid *ngIf="result">
+  <!-- <ion-grid *ngIf="result">
     <ion-row justify-content-around>
       <ion-col align-self-center>
         <ion-row padding-top>
@@ -44,10 +44,9 @@
         </ion-row>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid>  -->
   <ion-card *ngIf="errmsg">
     <ion-card-content>
       error : {{ errmsg }}
     </ion-card-content>
-  </ion-card>
-</ion-content>
+  </ion-card> 

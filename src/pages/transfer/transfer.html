@@ -10,35 +10,74 @@
   </ion-item>
   <ion-item>
     <ion-icon name="ios-cube-outline" item-start></ion-icon>
-    <ion-input type="text" placeholder="Storage Location" [(ngModel)]="_vpallet.TO_SLOC"></ion-input>
+    <ion-input type="text" placeholder="Storage Location" [(ngModel)]="storageloc"></ion-input>
   </ion-item>
   <br>
   <button ion-button full icon-left (click)="scanCode()" color="secondary" style="height: 40px;">
     <ion-icon name="qr-scanner"></ion-icon>Scan Code</button>
   <br>
-  <div *ngIf="_status==true">
-  <ion-card >
-    <ion-card-content>
-      <br>error : 'E'
-      <br>errmsg : {{ errmsg }}
-    </ion-card-content>      
-  </ion-card>
-</div>  
-<div *ngIf="_status==false">
-  <ion-card>
-    <ion-card-content>
-      <br> Material : {{ _vpallet.MATERIAL }}
-      <br> Description : {{ _vpallet.MAKTX }}
-      <br> Dimension : {{ _vpallet.GROES }}
-      <br> Sales Order : {{ _vpallet.SALES_ORD }}
-    </ion-card-content>
-  </ion-card>
-  <ion-grid >
+  <div *ngIf="_response == true">
+    <ion-card class="cardinfo" no-padding>
+      <ion-card-header>
+        Result Message
+      </ion-card-header>
+      <ion-card-content>
+        <br>message type  : {{ _vreturn.MESSAGE_TYPE }} 
+        <br>message : {{ _vreturn.MESSAGE }} 
+      </ion-card-content>
+    </ion-card>
+    <ion-grid>
       <ion-row justify-content-around>
         <ion-col align-self-center>
           <ion-row padding-top>
             <ion-col>
-              <button [disabled]="_status==true" (click)="getPallet()" ion-button outline block large round style="height: 40px;">Post</button>
+              <button [disabled]="_response==false" (click)="ClearData()" ion-button outline block large round style="height: 40px;">Clear</button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>      
+  </div>   
+  <div *ngIf="_status==true">
+    <ion-card class="cardError" no-padding>
+      <!-- <ion-card-header>
+        Error Message
+      </ion-card-header> -->
+      <ion-card-content>
+        <br>error : 'E'
+        <br>errmsg : {{ errmsg }}
+      </ion-card-content>
+    </ion-card>
+    <ion-grid>
+        <ion-row justify-content-around>
+          <ion-col align-self-center>
+            <ion-row padding-top>
+              <ion-col>
+                <button [disabled]="_status==false" (click)="ClearData()" ion-button outline block large round style="height: 40px;">Clear</button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>    
+  </div>
+  <div *ngIf="_status==false">
+      <ion-card class="cardSucess" no-padding>
+      <!-- <ion-card-header>
+        Pallet Detial
+      </ion-card-header> -->
+      <ion-card-content padding-top>
+        <br> Material : {{ _vpallet.MATERIAL }}
+        <br> Description : {{ _vpallet.MAKTX }}
+        <br> Dimension : {{ _vpallet.GROES }}
+        <br> Sales Order : {{ _vpallet.SALES_ORD }}
+      </ion-card-content>
+    </ion-card>
+    <ion-grid>
+      <ion-row justify-content-around>
+        <ion-col align-self-center>
+          <ion-row padding-top>
+            <ion-col>
+              <button [disabled]="_status==true" (click)="PostData()" ion-button outline block large round style="height: 40px;">Post</button>
             </ion-col>
             <ion-col>
               <button [disabled]="_status==true" (click)="ClearData()" ion-button outline block large round style="height: 40px;">Clear</button>
@@ -46,6 +85,6 @@
           </ion-row>
         </ion-col>
       </ion-row>
-    </ion-grid>  
-</div>  
+    </ion-grid>
+  </div>
 </ion-content>

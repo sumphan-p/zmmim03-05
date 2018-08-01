@@ -42,4 +42,18 @@ export class AuthServiceProvider {
       );
     });    
   }  
+  postPallet(_token:string,_pallet:string,_storage:string) {
+    let _headers = {
+      'Authorization' : 'Bearer '+ _token
+    };
+    let _params = new HttpParams()
+      .set('palletno', _pallet)
+      .set('storage', _storage);
+    return new Promise((res, rej) => {
+      this.http.get(this.url+'/Zmmim03/Transfer', { params:_params,headers:_headers}).subscribe(
+        d => { res(d); },
+        e => { rej(e); }
+      );
+    });    
+  }   
 }

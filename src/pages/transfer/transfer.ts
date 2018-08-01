@@ -13,8 +13,11 @@ import { ExPalletModel } from '../../Models/ex_pallet.model';
   providers: [BarcodeScanner]
 })
 export class TransferPage {
-  scannedCode = null;
   token: any;
+
+  scannedCode = null;
+  storageloc = null;
+
 
   public result: any;
   public errors: any;
@@ -25,7 +28,8 @@ export class TransferPage {
   public _return: ExReturnModel;
   public _pallet: ExPalletModel;
 
-  public _status : boolean;
+  public _status: boolean;
+  public _response: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -42,12 +46,17 @@ export class TransferPage {
     });
   }
   scanCode() {
-    this.barcodeScanner.scan().then(barcodeData => {
-      this.scannedCode = barcodeData.text;
+    if (!this.scannedCode) {
+      this.barcodeScanner.scan().then(barcodeData => {
+        this.scannedCode = barcodeData.text;
+        this.getPallet();
+      }, (err) => {
+        console.log('Error: ', err);
+      });
+    }
+    else {
       this.getPallet();
-    }, (err) => {
-      console.log('Error: ', err);
-    });
+    }
   }
 
   getPallet() {
@@ -67,21 +76,54 @@ export class TransferPage {
           this._vreturn = this._return[0];
           this._pallet = d[1];
           this._vpallet = this._pallet[0];
+          this.storageloc = this._vpallet.TO_SLOC;
           if (this._vreturn.MESSAGE_TYPE === 'E') {
             this._status = true;
             this.errmsg = this._vreturn.MESSAGE;
           }
         },
         (e) => {
-          this.errors  = e;
+          this.errors = e;
           this._status = true;
-          this.errmsg  = Object(e).name;
+          this.errmsg = Object(e).name;
         }
       );
   }
   ClearData() {
-    this.result = '';
-    this.errmsg = '';
-    this.scannedCode = '';
+    this.scannedCode = null;
+    this.storageloc = null;
+    this.result = null;
+    this.errors = null;
+    this.errmsg = null;
+    this._vreturn = null;
+    this._vpallet = null;
+    this._status = null;
+    this._response = null;
+  }
+  PostData() {
+    this.result = null;
+    this.errors = null;
+    this.errmsg = null;
+    this._return = null;
+    this._vreturn = null;
+    this._status = null;
+    this._response = false;
+    this._authservice.postPallet(this.token, this.scannedCode, this.storageloc)
+      .then(
+        (d) => {
+          this.result = JSON.stringify(d);
+          this._return = d[0];
+          this._vreturn = this._return[0];
+          this._response = true;          
+          // if (this._vreturn.MESSAGE_TYPE === 'E') {
+            this.errmsg = 'sumphan';
+          // }
+        },
+        (e) => {
+          this.errors = e;
+          this._response = true;
+          this.errmsg = Object(e).name;
+        }
+      );
   }
 }
