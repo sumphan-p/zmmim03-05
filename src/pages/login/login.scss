@@ -1,3 +1,14 @@
 page-login {
-
+    ion-row {
+        align-items: center;
+        text-align: center;
+      }
+      .cardError {
+        background-color: rgb(245, 92, 4);
+        border-radius: 10px;
+      } 
+      .profile-description {
+        color: #888;
+    }      
 }
+

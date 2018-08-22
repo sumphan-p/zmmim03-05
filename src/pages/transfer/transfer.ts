@@ -5,7 +5,6 @@ import { Storage } from '@ionic/storage';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { ExReturnModel } from '../../Models/ex_return.model';
 import { ExPalletModel } from '../../Models/ex_pallet.model';
-
 @IonicPage()
 @Component({
   selector: 'page-transfer',
@@ -14,23 +13,18 @@ import { ExPalletModel } from '../../Models/ex_pallet.model';
 })
 export class TransferPage {
   token: any;
-
   scannedCode = null;
   storageloc = null;
-
-
   public result: any;
   public errors: any;
   public errmsg: string;
-
   public _vreturn: any;
   public _vpallet: any;
   public _return: ExReturnModel;
   public _pallet: ExPalletModel;
-
+  public _client: string;
   public _status: boolean;
   public _response: boolean;
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,6 +38,10 @@ export class TransferPage {
       if (token === null) { this.token = ''; }
       else { this.token = token; }
     });
+    this.storage.get('zclient').then(client => {
+      if (client === null) { this._client = ''; }
+      else { this._client = client; }
+    });
   }
   scanCode() {
     if (!this.scannedCode) {
@@ -55,10 +53,17 @@ export class TransferPage {
       });
     }
     else {
+      this.storageloc = null;
+      this.result = null;
+      this.errors = null;
+      this.errmsg = null;
+      this._vreturn = null;
+      this._vpallet = null;
+      this._status = null;
+      this._response = null;
       this.getPallet();
     }
   }
-
   getPallet() {
     this.result = null;
     this.errors = null;
@@ -68,7 +73,7 @@ export class TransferPage {
     this._vreturn = null;
     this._vpallet = null;
     this._status = false;
-    this._authservice.getPallet(this.token, this.scannedCode)
+    this._authservice.getPallet(this.token, this._client, this.scannedCode, 'F')
       .then(
         (d) => {
           this.result = JSON.stringify(d);
@@ -80,6 +85,12 @@ export class TransferPage {
           if (this._vreturn.MESSAGE_TYPE === 'E') {
             this._status = true;
             this.errmsg = this._vreturn.MESSAGE;
+          }
+          else {
+            if (this._vpallet.POST_IND === 'X') {
+              this._status = true;
+              this.errmsg = 'The Pallet has already posted';
+            }
           }
         },
         (e) => {
@@ -108,16 +119,16 @@ export class TransferPage {
     this._vreturn = null;
     this._status = null;
     this._response = false;
-    this._authservice.postPallet(this.token, this.scannedCode, this.storageloc)
+    this._authservice.postPallet(this.token, this._client, this.scannedCode, this.storageloc)
       .then(
         (d) => {
           this.result = JSON.stringify(d);
           this._return = d[0];
           this._vreturn = this._return[0];
-          this._response = true;          
-          // if (this._vreturn.MESSAGE_TYPE === 'E') {
-            this.errmsg = 'sumphan';
-          // }
+          this._response = true;
+          if (this._vreturn.MESSAGE_TYPE === 'E') {
+            this.errmsg = this._vreturn.MESSAGE;
+          }
         },
         (e) => {
           this.errors = e;

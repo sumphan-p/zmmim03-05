@@ -7,53 +7,94 @@ export class AuthServiceProvider {
   constructor(
     private http: HttpClient,
     private storage: Storage,
-    @Inject('url_server') private url: string
+    @Inject('url_server') private url: string,
   ) {
+    this.storage.get('urlserver').then(url => {
+      if (url !== null) { this.url = url; }
+    });     
   }
   getToken(_user: UserModel) {
     let _params = new HttpParams()
-      .set('username', _user.username)
-      .set('password', _user.password);
+      .set('zclient', _user.zclient)
+      .set('username', _user.username.toUpperCase())
+      .set('password', _user.password.toUpperCase());
     return new Promise((res, rej) => {
       this.http.get(this.url + '/token/get', { params: _params }).subscribe(
         d => {
           res(d);
-          this.storage.set("username", _user.username);
-          this.storage.set("id_token", d);
+          if (d === 'Unauthorized') {
+            this.storage.remove('id_token');
+            this.storage.remove('password');
+          }
+          else {
+            this.storage.set("zclient", _user.zclient);
+            this.storage.set("username", _user.username.toUpperCase());
+            this.storage.set("password", _user.password.toUpperCase());
+            if (_user.remember === true)
+            { this.storage.set("remember", 'true'); }
+            else
+            { this.storage.set("remember", 'false'); }
+            this.storage.set("id_token", d);            
+          }
         },
         e => {
           rej(e);
-          this.storage.remove('username');
           this.storage.remove('id_token');
         }
       );
     });
   }
-  getPallet(_token:string,_pallet:string) {
+  getPallet(_token: string,_client:string,_pallet: string,_option:string) {
     let _headers = {
-      'Authorization' : 'Bearer '+ _token
+      'Authorization': 'Bearer ' + _token
     };
     let _params = new HttpParams()
-      .set('palletno',_pallet);
+      .set('zclient', _client)
+      .set('palletno', _pallet)
+      .set('zoption', _option);
     return new Promise((res, rej) => {
-      this.http.get(this.url+'/Zmmim03/Pallet_Chk', { params:_params,headers:_headers}).subscribe(
+      this.http.get(this.url + '/Zmmim03/Pallet_Chk', { params: _params, headers: _headers }).subscribe(
         d => { res(d); },
         e => { rej(e); }
       );
-    });    
-  }  
-  postPallet(_token:string,_pallet:string,_storage:string) {
+    });
+  }
+  postPallet(_token: string, _client:string, _pallet: string, _storage: string) {
     let _headers = {
-      'Authorization' : 'Bearer '+ _token
+      'Authorization': 'Bearer ' + _token
     };
     let _params = new HttpParams()
+      .set('zclient', _client)
       .set('palletno', _pallet)
       .set('storage', _storage);
     return new Promise((res, rej) => {
-      this.http.get(this.url+'/Zmmim03/Transfer', { params:_params,headers:_headers}).subscribe(
+      this.http.get(this.url + '/Zmmim03/Transfer', { params: _params, headers: _headers }).subscribe(
         d => { res(d); },
         e => { rej(e); }
       );
-    });    
-  }   
+    });
+  }
+  cancelPallet(_token:string,_client:string,_pallet:string) {
+    let _headers = { 'Authorization': 'Bearer ' + _token };
+    let _params = new HttpParams()
+      .set('zclient', _client)
+      .set('palletno', _pallet);
+    return new Promise((res, rej) => {
+      this.http.get(this.url + '/Zmmim03/Cancel', { params: _params, headers: _headers }).subscribe(
+        d => { res(d); },
+        e => { rej(e); }
+      );
+    });
+  }
+
+  reportPallet(_token: string,_client:string, _date: string) {
+    let _headers = { 'Authorization': 'Bearer ' + _token };
+    let _params = new HttpParams().set('zclient', _client).set('im_date', _date);
+    return new Promise((res, rej) => {
+      this.http.get(this.url + '/Zmmim03/Report', { params: _params, headers: _headers }).subscribe(
+        d => { res(d); },
+        e => { rej(e); }
+      );
+    });
+  }
 }
