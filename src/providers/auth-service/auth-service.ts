@@ -97,4 +97,47 @@ export class AuthServiceProvider {
       );
     });
   }
+
+  login_c(_token: string,zclient:string, im_user:string, im_pwd:string, im_full:string ) {
+    let _headers = { 'Authorization': 'Bearer ' + _token };
+    let _params = new HttpParams()
+      .set('zclient', zclient)
+      .set('im_user', im_user)
+      .set('im_pwd' , im_pwd)
+      .set('im_full', im_full);
+    return new Promise((res, rej) => {
+      this.http.get(this.url + '/Zmmim03/Login_c', { params: _params, headers: _headers }).subscribe(
+        d => { res(d); },
+        e => { rej(e); }
+      );
+    });    
+  }
+  login_u(_token: string,zclient:string, im_user:string, im_pwd:string, im_full:string, im_newpwd:string ) {
+    let _headers = { 'Authorization': 'Bearer ' + _token };
+    let _params = new HttpParams()
+      .set('zclient', zclient)
+      .set('im_user', im_user)
+      .set('im_pwd' , im_pwd)
+      .set('im_full', im_full)
+      .set('im_newpwd', im_newpwd);
+    return new Promise((res, rej) => {
+      this.http.get(this.url + '/Zmmim03/Login_u', { params: _params, headers: _headers }).subscribe(
+        d => { res(d); },
+        e => { rej(e); }
+      );
+    });    
+  }  
+  login_d(_token: string,zclient:string, im_user:string, im_pwd:string) {
+    let _headers = { 'Authorization': 'Bearer ' + _token };
+    let _params = new HttpParams()
+      .set('zclient', zclient)
+      .set('im_user', im_user)
+      .set('im_pwd', im_pwd);
+    return new Promise((res, rej) => {
+      this.http.get(this.url + '/Zmmim03/Login_d', { params: _params, headers: _headers }).subscribe(
+        d => { res(d); },
+        e => { rej(e); }
+      );
+    });    
+  }   
 }

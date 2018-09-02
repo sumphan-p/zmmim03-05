@@ -137,4 +137,7 @@ export class TransferPage {
         }
       );
   }
+  ionViewDidLeave(){
+    this.ClearData();
+  }
 }

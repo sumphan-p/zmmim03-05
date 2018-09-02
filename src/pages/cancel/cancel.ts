@@ -137,4 +137,7 @@ export class CancelPage {
         }
       );
   }
+  ionViewDidLeave(){
+    this.ClearData();
+  }
 }

@@ -26,8 +26,8 @@ page-about {
         border-radius: 50%;
         -webkit-border-radius: 150px;
         -moz-border-radius: 150px;
-        border: solid rgb(8, 134, 238);
-        background: url(../assets/imgs/avatar/kcorp-avatar.png) no-repeat;
+        border: solid rgba(7, 197, 245, 0.918);
+        background: url(../assets/imgs/avatar/kpi-avatar.jpg) no-repeat;
         background-size: 100%;
         margin-top: -70px;
         margin-left: auto;
@@ -38,4 +38,7 @@ page-about {
         font-size: 15px;
         color: #888;
     }
+    h2 {
+        color: rgb(45, 10, 245);
+    }    
 }

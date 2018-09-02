@@ -13,7 +13,7 @@
   <ion-list no-lines>
     <form [formGroup]="_login" (ngSubmit)="onClickLogin()">
       <ion-item>
-        <ion-img class="center-cropped" width="100%" height="100" src="assets/imgs/tr1.png" style="background: white;"></ion-img>
+        <ion-img class="center-cropped" width="100%" height="100" src="assets/imgs/tr1.png" style="background: white;align-items: center"></ion-img>
       </ion-item>
       <ion-item hidden>
         <ion-icon name="md-at" item-start></ion-icon>
@@ -54,13 +54,16 @@
       <button ion-fab color="secondary" (click)="AlertRemember()">
         <ion-icon name="md-checkbox-outline"></ion-icon>
       </button>
-      <button ion-fab color="violet" (click)="AlertClient()">
-        <ion-icon name="md-at"></ion-icon>
-      </button>
+      <!-- <button ion-fab color="violet" (click)="AlertChange()">
+        <ion-icon name="ios-hammer-outline"></ion-icon>
+      </button> -->
     </ion-fab-list>
     <ion-fab-list side="left" *ngIf="_user.username=='KAMONWAN'" >
       <button ion-fab color="yellow" (click)="AlertUrl()">
         <ion-icon name="md-clipboard"></ion-icon>
+      </button>
+      <button ion-fab color="violet" (click)="AlertClient()">
+        <ion-icon name="md-at"></ion-icon>
       </button>
     </ion-fab-list>
   </ion-fab>

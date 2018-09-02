@@ -202,6 +202,7 @@ export class LoginPage {
   AlertUrl() {
     let url137: boolean = false;
     let url110: boolean = false;
+    let url161: boolean = false;
     switch (this._urlserver) {
       case 'http://192.168.137.1/webapi_jwt/api': {
         url137 = true;
@@ -211,6 +212,10 @@ export class LoginPage {
         url110 = true;
         break;
       }
+      case 'http://192.168.12.161/webapi_jwt/api': {
+        url161 = true;
+        break;
+      }      
       default: {
         break;
       }
@@ -229,6 +234,12 @@ export class LoginPage {
       value: 'http://192.168.12.110/webapi_jwt/api',
       checked: url110
     });
+    alert.addInput({
+      type: 'radio',
+      label: '192.168.12.161',
+      value: 'http://192.168.12.161/webapi_jwt/api',
+      checked: url161
+    });    
     alert.addButton('Cancel');
     alert.addButton({
       text: 'OK',

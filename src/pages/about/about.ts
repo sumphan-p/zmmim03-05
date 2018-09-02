@@ -8,12 +8,13 @@ import { Storage } from '@ionic/storage';
 })
 export class AboutPage {
   user = {
-    name: 'King Corporation Co.,Ltd.',
+    name: 'King Pac Industrial',
     profileImage: 'assets/imgs/avatar/girl-avatar.png',
     coverImage: 'assets/imgs/background/background-5.jpg',
     occupation: 'Designer',
     location: 'IT Support, KC',
-    description: 'โปรแกรม Pallet Transfer ใชัสำหรับ รับ-ส่ง สินค้าสำเร็จรูปแบบอัตโนมัติ ระหว่างฝ่ายผลิตและฝ่ายคลังสินค้า.',
+    description: 'Version : 0.0.1',
+    // description: 'โปรแกรม Pallet Transfer ใชัสำหรับ รับ-ส่ง สินค้าสำเร็จรูปแบบอัตโนมัติ ระหว่างฝ่ายผลิตและฝ่ายคลังสินค้า.',
   };  
   public _uname: string;
   constructor(

@@ -76,4 +76,7 @@ export class ReportPage {
     this._vpallet = null;
     this._status = null;
   }
+  ionViewDidLeave(){
+    this.ClearData();
+  }
 }

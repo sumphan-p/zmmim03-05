@@ -1,20 +1,15 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>About</ion-title>
-  </ion-navbar>
-</ion-header>
 <ion-content parallax-header no-bounce class="bg-modal">
     <div class="header-image"></div>
     <div class="main-content" text-wrap text-center>
         <div class="circular"></div>
         <h2>{{user.name}}</h2>
-        <p>{{user.occupation}} &bull; {{user.location}}</p>
+        <!-- <p>{{user.occupation}} &bull; {{user.location}}</p> -->
         <p class="profile-description">{{user.description}}</p>
+        <p>Signed in as {{ _uname }} </p>        
         <hr>
     </div>
     <!-- <div class="main-content" text-wrap text-center *ngIf="_uname === 'KAMONWAN'"></div>    -->
     <div class="main-content" text-wrap text-center>
-        Welcome to {{ _uname }}
         <ion-list no-lines>
             <ion-item>
                 <ion-icon name="logo-whatsapp" color="primary" item-start></ion-icon>
@@ -28,7 +23,7 @@
             </ion-item>
             <ion-item>
                 <ion-icon item-start name="md-close-circle" color="danger"></ion-icon>
-                <p>Delect Account</p>
+                <p>Delete Account</p>
                 <a button ion-button color="danger" item-end medium (click)="openpage('LoginDeletePage')">Open</a>
             </ion-item>            
         </ion-list>

@@ -40,8 +40,9 @@
     <ion-list>
       <ion-item-sliding *ngFor="let v of _pallet">
         <ion-item>
+            <div *ngIf="v.POST_IND=='X'">
           <ion-card class="cardInfo" no-padding>
-            <ion-card-header>
+            <ion-card-header class="card-h-x">
               Pallet No. : {{ v.PALLET_ID }}
             </ion-card-header>
             <ion-card-content>
@@ -53,6 +54,37 @@
               <br>Change Date : {{ v.CHDATE }} {{ v.CHTIME }}
             </ion-card-content>
           </ion-card>
+          </div>
+          <div *ngIf="v.POST_IND=='C'">
+          <ion-card class="cardInfo" no-padding>
+            <ion-card-header class="card-h-c">
+              Pallet No. : {{ v.PALLET_ID }}
+            </ion-card-header>
+            <ion-card-content>
+              <br>[ Plant : {{ v.PLANT }} ] [ Zone : {{ v.ZONE1 }} ] [ SLoc : {{ v.TO_SLOC }} ]
+              <br>Material : {{ v.MATERIAL }} : {{ v.MAKTX }}
+              <br>Dimension : {{ v.GROES }}
+              <br>Sales Order : {{ v.SALES_ORD }}
+              <br>Material Doc. : {{ v.MAT_DOC }}/{{ v.MAT_YEAR }} [ {{ v.POST_IND }} ]
+              <br>Change Date : {{ v.CHDATE }} {{ v.CHTIME }}
+            </ion-card-content>
+          </ion-card> 
+        </div>    
+        <div *ngIf="!v.POST_IND">
+            <ion-card class="cardInfo" no-padding>
+              <ion-card-header class="card-h-y">
+                Pallet No. : {{ v.PALLET_ID }}
+              </ion-card-header>
+              <ion-card-content>
+                <br>[ Plant : {{ v.PLANT }} ] [ Zone : {{ v.ZONE1 }} ] [ SLoc : {{ v.TO_SLOC }} ]
+                <br>Material : {{ v.MATERIAL }} : {{ v.MAKTX }}
+                <br>Dimension : {{ v.GROES }}
+                <br>Sales Order : {{ v.SALES_ORD }}
+                <br>Material Doc. : {{ v.MAT_DOC }}/{{ v.MAT_YEAR }} [ {{ v.POST_IND }} ]
+                <br>Change Date : {{ v.CHDATE }} {{ v.CHTIME }}
+              </ion-card-content>
+            </ion-card> 
+          </div>               
         </ion-item>
       </ion-item-sliding>
     </ion-list>
